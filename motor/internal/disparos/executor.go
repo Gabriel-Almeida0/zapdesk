@@ -56,6 +56,9 @@ func (s *Servico) acordar(contaID string) {
 	}
 	select {
 	case e.acordar <- struct{}{}:
+		// Sai de "esperando" já aqui, sob s.mu: se o executor estava bloqueado no canal, o sinal é
+		// entregue direto (o buffer continua vazio) e AguardarOcioso poderia voltar antes do passo.
+		e.esperando = false
 	default:
 	}
 }
