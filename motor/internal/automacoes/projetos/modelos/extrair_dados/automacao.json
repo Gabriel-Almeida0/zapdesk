@@ -1,0 +1,16 @@
+{
+  "$schema": "./.zapdesk/automacao.schema.json",
+  "versao_manifesto": 1,
+  "nome": "Extrair dados do lead",
+  "descricao": null,
+  "entrada": "index.ts",
+  "gatilhos": [{ "tipo": "mensagem_recebida" }, { "tipo": "manual" }],
+  "permissoes": ["ler_conversas", "leads", "ia"],
+  "segredos": [],
+  "contas": "todas",
+  "incluir_grupos": false,
+  "prioridade": 100,
+  "conta_envio": null,
+  "limites": { "tempo_s": 60, "memoria_mb": 256, "anti_loop": null },
+  "ia": { "modelo": null }
+}

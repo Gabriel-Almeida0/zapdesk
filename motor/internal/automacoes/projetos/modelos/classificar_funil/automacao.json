@@ -1,0 +1,16 @@
+{
+  "$schema": "./.zapdesk/automacao.schema.json",
+  "versao_manifesto": 1,
+  "nome": "Classificar no funil",
+  "descricao": null,
+  "entrada": "index.ts",
+  "gatilhos": [{ "tipo": "mensagem_recebida" }],
+  "permissoes": ["ler_conversas", "funil", "etiquetas", "ia"],
+  "segredos": [],
+  "contas": "todas",
+  "incluir_grupos": false,
+  "prioridade": 100,
+  "conta_envio": null,
+  "limites": { "tempo_s": 60, "memoria_mb": 256, "anti_loop": null },
+  "ia": { "modelo": null }
+}
