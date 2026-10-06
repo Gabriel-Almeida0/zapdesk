@@ -1,0 +1,28 @@
+{
+  "name": "@zapdesk/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servidor MCP (stdio) do ZapDesk — contracts/mcp-ferramentas.md",
+  "type": "module",
+  "bin": {
+    "zapdesk-mcp": "./dist/zapdesk-mcp.mjs"
+  },
+  "scripts": {
+    "compilar": "node build.mjs",
+    "iniciar": "node dist/zapdesk-mcp.mjs",
+    "tipos": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.1.0",
+    "@zapdesk/cliente-motor": "*",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.1.0",
+    "@types/node": "^22.19.0",
+    "esbuild": "^0.28.2",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}
