@@ -30,6 +30,8 @@ motor.lock
 *.db.bak-*
 dados/
 dados-dev/
+# ...exceto as fixtures sintéticas dos testes do motor (geradas por gerador_test.go)
+!motor/testes/dados/
 .zapdesk/
 
 # Segredos
