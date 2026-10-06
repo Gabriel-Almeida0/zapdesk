@@ -1,0 +1,52 @@
+# Dependências e builds (Node)
+node_modules/
+dist/
+out/
+build/
+coverage/
+*.tsbuildinfo
+*.log
+npm-debug.log*
+
+# Motor (Go)
+motor/bin/
+motor/zapdesk-motor
+*.exe
+*.test
+*.out
+vendor/
+
+# Empacotamento
+release/
+*.dmg
+
+# Dados locais do app/motor (nunca versionar)
+runtime.json
+motor.lock
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.db.bak-*
+dados/
+dados-dev/
+.zapdesk/
+
+# Segredos
+.env
+.env.*
+
+# Sistema/editores
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+
+# Binário do motor copiado para o empacotamento
+app/resources/bin/
+
+# Capturas de verificação visual (centenas de PNG gerados por app/scripts/capturar.mjs)
+docs/verificacao/
+.playwright-mcp/

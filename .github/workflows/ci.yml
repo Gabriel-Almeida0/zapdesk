@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  # Com ZAPDESK_CI=1 os testes de IA do motor FALHAM (em vez de pular) se o runner não estiver
+  # compilado em automacao/runner/dist (specs/002-automacoes, T046).
+  ZAPDESK_CI: '1'
+  # O binário do Electron não é necessário para tsc/vitest.
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+jobs:
+  motor:
+    name: Motor (Go)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: motor/go.mod
+          cache-dependency-path: motor/go.sum
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Instalar dependências (Node)
+        run: npm ci
+      # Os testes de integração das automações de IA executam o runner real com `node`.
+      - name: Compilar pacotes compartilhados e o runner
+        run: npm run compartilhado:compilar && npm run runner:compilar
+      - name: Tipos do SDK embutidos no motor em dia
+        run: bash scripts/sincronizar-sdk.sh --verificar
+      - name: go vet
+        working-directory: motor
+        run: go vet ./...
+      - name: go test
+        working-directory: motor
+        run: go test ./...
+      - name: Compilar (darwin/arm64, sem CGO)
+        working-directory: motor
+        run: CGO_ENABLED=0 go build -trimpath -o bin/zapdesk-motor ./cmd/zapdesk-motor
+
+  node:
+    name: App, MCP, runner, SDK e cliente compartilhado (Node)
+    runs-on: macos-latest
+    needs: motor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: motor/go.mod
+          cache-dependency-path: motor/go.sum
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Compilar o motor (usado pelos testes do MCP contra o motor falso)
+        run: npm run motor:compilar
+      - name: Tipos (tsc --noEmit, todos os workspaces)
+        run: npm run tipos
+      - name: Testes (todos os workspaces; compila compartilhado/* e o runner antes)
+        run: npm test
+      - name: Tipos do SDK embutidos no motor em dia
+        run: bash scripts/sincronizar-sdk.sh --verificar

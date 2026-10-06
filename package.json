@@ -1,0 +1,28 @@
+{
+  "name": "zapdesk",
+  "private": true,
+  "version": "0.1.0",
+  "description": "ZapDesk — WhatsApp desktop local com disparo em massa e MCP",
+  "type": "module",
+  "workspaces": [
+    "compartilhado/cliente-motor",
+    "compartilhado/automacao-sdk",
+    "automacao/runner",
+    "app",
+    "mcp"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "motor:compilar": "cd motor && CGO_ENABLED=0 go build -trimpath -o bin/zapdesk-motor ./cmd/zapdesk-motor",
+    "motor:testar": "cd motor && go test ./...",
+    "compartilhado:compilar": "npm run compilar -w @zapdesk/cliente-motor && npm run compilar -w @zapdesk/automacao",
+    "sdk:sincronizar": "bash scripts/sincronizar-sdk.sh",
+    "runner:compilar": "npm run compilar -w @zapdesk/automacao-runner",
+    "test": "npm run compartilhado:compilar && npm run runner:compilar && npm test --workspaces --if-present",
+    "tipos": "npm run compartilhado:compilar && npm run tipos --workspaces --if-present",
+    "dev": "npm run motor:compilar && npm run compartilhado:compilar && npm run runner:compilar && npm run dev -w @zapdesk/app",
+    "empacotar": "bash scripts/empacotar.sh"
+  }
+}
