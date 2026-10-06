@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "types": [],
+    "paths": { "@zapdesk/automacao": ["../../../dist/index.d.ts"] }
+  },
+  "files": ["index.ts"]
+}

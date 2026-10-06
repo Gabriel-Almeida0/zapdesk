@@ -1,0 +1,28 @@
+{
+  "name": "@zapdesk/automacao",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SDK das automações de IA do ZapDesk: definirAutomacao, API do ctx e classes de erro (specs/002-automacoes/contracts/sdk-automacao.md)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "compilar": "tsc -p tsconfig.build.json && node juntar-dts.mjs",
+    "tipos": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run compilar && vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

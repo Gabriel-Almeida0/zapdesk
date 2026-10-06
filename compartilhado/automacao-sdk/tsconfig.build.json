@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    // A SDK roda dentro do runner e é lida pelo Monaco/VS Code: sem tipos do Node no .d.ts.
+    "types": []
+  },
+  "include": ["src"]
+}

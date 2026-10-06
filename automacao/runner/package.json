@@ -1,0 +1,19 @@
+{
+  "name": "@zapdesk/automacao-runner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Runner isolado das automações de IA do ZapDesk (processo filho do motor; specs/002-automacoes/contracts/runner-protocolo.md)",
+  "type": "module",
+  "scripts": {
+    "compilar": "node build.mjs",
+    "tipos": "tsc --noEmit -p tsconfig.json",
+    "test": "node build.mjs && vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "@zapdesk/automacao": "*",
+    "esbuild": "0.28.2",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

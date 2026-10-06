@@ -1,0 +1,35 @@
+{
+  "name": "@zapdesk/cliente-motor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tipos e cliente HTTP/WebSocket do contrato do motor do ZapDesk (contracts/api-http.md, eventos-ws.md, runtime.md)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./runtime": {
+      "types": "./dist/runtime.d.ts",
+      "default": "./dist/runtime.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "compilar": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch --preserveWatchOutput",
+    "tipos": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.2",
+    "ws": "^8.22.0"
+  }
+}
