@@ -1,0 +1,673 @@
+/* controles.css — botões, campos, utilitários, interruptor, abas, ponto de etiqueta.
+ * Dono: fundação (compartilhado — blocos só leem).
+ * Origem (T008): app.css 105–511; app.css 2570–2596; automacoes.css 1–129; restilizado na fundação (T014) só com tokens novos.
+ * Tamanhos (alturas/paddings) preservados do original: só cor, borda, raio e peso mudaram.
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- botões
+ * .botao = primário âmbar (preenchimento --sinal, texto --tinta, contorno --borda-primario: escuro
+ * fino no claro, nenhum no escuro). .secundario = contorno --linha-forte. .perigo = coral em contorno.
+ * Variações de tamanho: .pequeno (28) · padrão (36) · .grande (44) · .largo (100%). */
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 18px;
+  border: 1.5px solid var(--borda-primario);
+  border-radius: var(--raio-tecla);
+  background: var(--sinal);
+  color: var(--tinta);
+  font-weight: 600;
+  font-variation-settings: 'wdth' 95;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.15s var(--ease-mesa),
+    border-color 0.15s var(--ease-mesa);
+}
+
+.botao:hover:not(:disabled) {
+  background: var(--sinal-hover);
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.botao.secundario {
+  background: transparent;
+  color: var(--texto);
+  border: 1px solid var(--linha-forte);
+}
+
+.botao.secundario:hover:not(:disabled) {
+  background: var(--fundo-2);
+}
+
+.botao.perigo {
+  background: transparent;
+  color: var(--coral);
+  border: 1px solid var(--coral);
+}
+
+.botao.perigo:hover:not(:disabled) {
+  background: var(--coral-suave);
+}
+
+.botao.perigo-texto,
+.menu-item.perigo {
+  color: var(--coral);
+}
+
+.botao.pequeno {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.botao.grande {
+  height: 44px;
+  padding: 0 28px;
+  font-size: 15px;
+}
+
+.botao.largo {
+  width: 100%;
+}
+
+.botao-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--sinal-texto);
+  font-weight: 600;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+
+.botao-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.botao-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 0;
+  border-radius: var(--raio-tecla);
+  background: transparent;
+  color: var(--texto-2);
+  cursor: pointer;
+  transition:
+    background 0.15s var(--ease-mesa),
+    color 0.15s var(--ease-mesa);
+}
+
+.botao-icone:hover:not(:disabled) {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.botao-icone.ativo {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.botao-icone:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.botao-icone.pequeno {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+.botao-enviar {
+  color: var(--sinal-texto);
+}
+
+/* ---------------------------------------------------------------- chips e selos (genéricos)
+ * Filtro em pílula: .chip; .chip.ativo = invertido (fundo --texto, texto --fundo), como no mockup. */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  /* --fundo como os filtros do ChatMockup (003 T052, pendência B1); altura segue 30 px */
+  background: var(--fundo);
+  color: var(--texto-2);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chip:hover:not(.ativo) {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.chip.ativo {
+  background: var(--texto);
+  border-color: var(--texto);
+  color: var(--fundo);
+}
+
+.chip-select {
+  appearance: none;
+  padding-right: 12px;
+}
+
+/* Chip de etiqueta: pílula neutra + .ponto-etiqueta na cor do usuário (inline). */
+.chip-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  background: var(--fundo);
+  color: var(--texto);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.chip-etiqueta.mini {
+  font-size: 11px;
+  padding: 1px 7px;
+}
+
+.chip-remover {
+  display: inline-flex;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--texto-2);
+}
+
+.chip-remover:hover {
+  color: var(--coral);
+}
+
+/* Ponto de cor de DADOS do usuário (etiqueta/etapa, cor inline): contorno para nunca sumir. */
+.ponto-etiqueta {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: inset 0 0 0 1px var(--linha-forte);
+}
+
+.ponto-etiqueta.grande {
+  width: 16px;
+  height: 16px;
+}
+
+/* Selo pequeno genérico (tipo, contagem). Tons: .ok (positivo/ciano), .erro (coral), .info (neutro
+ * com contorno). Estados de domínio usam .selo-estado (estrutura.css). */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 8px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--superficie);
+  color: var(--texto-2);
+}
+
+.selo.ok {
+  background: var(--ciano-suave);
+  border-color: transparent;
+  color: var(--ciano);
+}
+
+.selo.erro {
+  background: var(--coral-suave);
+  border-color: transparent;
+  color: var(--coral);
+}
+
+.selo.info {
+  background: var(--fundo-2);
+  border-color: var(--linha);
+  color: var(--texto);
+}
+
+/* ---------------------------------------------------------------- campos
+ * Campo: --superficie, borda 1 px --linha-forte, raio 8; foco = borda --foco + anel (base.css). */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 14px;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.campo > span:first-child,
+.campo > legend {
+  font-size: 13px;
+  color: var(--texto);
+  font-weight: 500;
+  padding: 0;
+}
+
+.campo small {
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.campo input:not([type='checkbox']):not([type='radio']):not([type='color']),
+.campo textarea,
+.campo select,
+.formulario input:not([type='checkbox']):not([type='radio']):not([type='color']),
+.linha-form input,
+.opcoes-radio input[type='datetime-local'],
+.seletor {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  outline: none;
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder,
+.formulario input::placeholder,
+.linha-form input::placeholder {
+  color: var(--texto-2);
+}
+
+.campo input[type='number'],
+.campo input[type='time'],
+.campo input[type='date'],
+.campo input[type='datetime-local'],
+.campo input[type='tel'],
+.opcoes-radio input[type='datetime-local'],
+.numero-curto {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+}
+
+.campo textarea {
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.campo input:focus,
+.campo textarea:focus,
+.campo select:focus,
+.seletor:focus,
+.formulario input:not([type='checkbox']):not([type='radio']):not([type='color']):focus,
+.opcoes-radio input[type='datetime-local']:focus,
+.linha-form input:focus {
+  border-color: var(--foco);
+  /* 003 T061 (SC-007): anel de 2 px (borda + 1 px de sombra) — a borda sozinha era fraca. */
+  box-shadow: 0 0 0 1px var(--foco);
+}
+
+[aria-invalid='true'] {
+  border-color: var(--coral) !important;
+}
+
+.seletor {
+  width: auto;
+  min-width: 180px;
+}
+
+.campo-codigo {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+}
+
+.campo-unidade {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campo-unidade input {
+  max-width: 140px;
+}
+
+.campo-unidade span {
+  color: var(--texto-2);
+  font-size: 13px;
+}
+
+.caixa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.caixa input,
+input[type='radio'] {
+  accent-color: var(--sinal);
+  width: 16px;
+  height: 16px;
+}
+
+.campo-busca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--fundo);
+  color: var(--texto-2);
+}
+
+.campo-busca:focus-within {
+  border-color: var(--foco);
+  box-shadow: 0 0 0 1px var(--foco);
+}
+
+.campo-busca input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--texto);
+}
+
+.campo-busca input::placeholder {
+  color: var(--texto-2);
+}
+
+.campo-busca input::-webkit-search-cancel-button {
+  filter: grayscale(1);
+}
+
+.grade-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0 16px;
+}
+
+/* Grupo de campos (fieldset/legend): borda --linha, raio 10, legenda 12 px 600. */
+.grupo-campos {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  padding: 14px 16px 4px;
+  margin: 0 0 16px;
+}
+
+.grupo-campos legend {
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.opcoes-radio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-bottom: 8px;
+}
+
+.opcoes-radio input[type='datetime-local'] {
+  width: auto;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.linha-form {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.linha-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.salvo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--ciano);
+}
+
+.lista-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.lista-escolha {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 200px;
+  overflow: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--superficie);
+  margin-top: 8px;
+}
+
+.lista-escolha.alta {
+  max-height: 320px;
+}
+
+/* ---------------------------------------------------------------- abas
+ * Sublinhado 3 px; ativa = --texto 600 + sublinhado --sinal; inativa --texto-2. */
+
+.abas {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--linha);
+  margin-bottom: 16px;
+}
+
+.aba {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--texto-2);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.aba:hover:not(.ativa) {
+  color: var(--texto);
+}
+
+.aba.ativa {
+  color: var(--texto);
+  font-weight: 600;
+  border-bottom-color: var(--sinal);
+}
+
+/* ---------------------------------------------------------------- utilitários de automações (002) */
+
+.bloco-log {
+  margin: 0;
+  padding: 10px 12px;
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid var(--tela-linha);
+  border-radius: 8px;
+  background: var(--tela);
+  color: var(--tela-texto);
+  font-family: var(--fonte-mono);
+  font-size: 12.5px;
+  font-variant-ligatures: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+}
+
+.numero-curto {
+  width: 72px !important;
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+.item-escolha {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--texto);
+  cursor: pointer;
+  text-align: left;
+}
+
+.item-escolha:hover:not(:disabled) {
+  background: var(--fundo-2);
+}
+
+.item-escolha small {
+  color: var(--texto-2);
+}
+
+.lista-escolha > li {
+  list-style: none;
+}
+
+ul.lista-escolha {
+  margin: 0;
+}
+
+.centro {
+  text-align: center;
+  padding: 40px;
+}
+
+.erros-campo {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+}
+
+/* ---------------------------------------------------------------- interruptor (switch)
+ * Trilho --linha-forte; ligado = --sinal com contorno --borda-primario; bolinha --superficie. */
+.interruptor {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--texto-2);
+  white-space: nowrap;
+}
+
+.interruptor input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.interruptor-trilho {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: var(--raio-pilula);
+  background: var(--linha-forte);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: background 0.15s var(--ease-mesa);
+  flex: none;
+}
+
+.interruptor-trilho::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--superficie);
+  transition: transform 0.15s var(--ease-mesa);
+}
+
+.interruptor.ligado .interruptor-trilho {
+  background: var(--sinal);
+  box-shadow: inset 0 0 0 1.5px var(--borda-primario);
+}
+
+.interruptor.ligado .interruptor-trilho::after {
+  transform: translateX(14px);
+  background: var(--tinta);
+}
+
+.interruptor input:focus-visible + .interruptor-trilho {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.interruptor input:disabled + .interruptor-trilho {
+  opacity: 0.5;
+}
+
+.interruptor.ligado span:last-child {
+  color: var(--texto);
+  font-weight: 600;
+}

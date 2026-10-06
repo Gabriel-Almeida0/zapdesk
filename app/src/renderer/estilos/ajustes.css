@@ -1,0 +1,645 @@
+/* ajustes.css — tela cheia (carregando/erro), conectar conta, ajustes, status, ajustes de automações/IA.
+ * Dono: B5 (ajustes, contas, QR, status, carregando/erro).
+ * Origem (divisão mecânica T008): app.css 885–966; app.css 2197–2299; app.css 3083–3238; automacoes.css 786–834.
+ * Restilizado em T037 (003) só com tokens novos, conforme a landing ("mesa de operação").
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md.
+ * Ilhas escuras (.bloco-codigo, estado vazio do status): os tokens de tema são reapontados para
+ * os da tela escura (--tela*) dentro do bloco, para os primitivos (botão secundário, estado vazio)
+ * manterem contraste sem serem sobrescritos. */
+
+/* ---------------------------------------------------------------- tela cheia (carregando/erro) */
+
+.tela-cheia {
+  position: relative;
+  isolation: isolate;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+  background: var(--fundo);
+  color: var(--texto);
+  padding: 24px;
+  -webkit-app-region: drag;
+}
+
+/* Grade de pontos (perfboard) da landing, desvanecendo nas bordas. A máscara só usa o alfa. */
+.tela-cheia::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(var(--pontos) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, var(--tinta) 30%, transparent 100%);
+}
+
+.tela-cheia button {
+  -webkit-app-region: no-drag;
+}
+
+.tela-cheia h1 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.1;
+  font-variation-settings: 'opsz' 96, 'wdth' 90;
+  letter-spacing: -0.025em;
+  color: var(--texto);
+}
+
+.tela-cheia p {
+  margin: 0;
+  color: var(--texto-2);
+  font-size: 15px;
+}
+
+/* Logotipo da landing (tecla + "zapdesk"). O <h1>ZapDesk</h1> continua no DOM para leitores de
+ * tela e para o título; visualmente o wordmark (aria-hidden) faz o papel dele. */
+.logo-grande {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.carregando p[role='status'] {
+  font-family: var(--fonte-mono);
+  font-size: 13px;
+  font-variant-ligatures: none;
+  letter-spacing: 0.02em;
+}
+
+.rodape-seguro {
+  position: absolute;
+  bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px !important;
+  letter-spacing: 0.02em;
+  color: var(--texto-2) !important;
+}
+
+.barra-indeterminada {
+  width: 280px;
+  max-width: 80vw;
+  height: 4px;
+  border-radius: var(--raio-pilula);
+  background: var(--linha);
+  overflow: hidden;
+}
+
+.barra-indeterminada span {
+  display: block;
+  width: 35%;
+  height: 100%;
+  background: var(--sinal);
+  border-radius: var(--raio-pilula);
+  animation: indeterminada 1.4s var(--ease-mesa) infinite;
+}
+
+@keyframes indeterminada {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+/* Movimento reduzido: barra parada (um trecho âmbar fixo no começo), sem vai-e-vem. */
+@media (prefers-reduced-motion: reduce) {
+  .barra-indeterminada span {
+    animation: none;
+    transform: none;
+  }
+}
+
+.erro-motor .icone-erro {
+  color: var(--coral);
+}
+
+.erro-motor h1 {
+  font-size: 28px;
+  max-width: 640px;
+}
+
+.erro-motor .detalhe {
+  max-width: 560px;
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12.5px !important;
+  line-height: 1.6;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-left: 2px solid var(--coral);
+  padding: 10px 14px;
+  border-radius: 4px var(--raio-tecla) var(--raio-tecla) 4px;
+  text-align: left;
+  user-select: text;
+}
+
+/* ---------------------------------------------------------------- conectar conta */
+
+.conectar-conta {
+  background-color: var(--fundo);
+  background-image: radial-gradient(var(--pontos) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: local;
+}
+
+.conectar-conta .cabecalho-tela {
+  width: min(720px, 100%);
+}
+
+.conectar-cartao {
+  width: min(720px, 100%);
+  padding: 32px 40px;
+  align-items: stretch;
+  border-radius: var(--raio-painel);
+}
+
+.conectar-passos {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  color: var(--texto-2);
+}
+
+.conectar-passos > svg {
+  flex: none;
+  padding: 8px;
+  box-sizing: content-box;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie-2);
+  color: var(--texto-2);
+}
+
+/* Passos numerados em mono, cada número numa "tecla" pequena. */
+.conectar-passos ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--texto);
+}
+
+.conectar-passos li {
+  counter-increment: passo;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.conectar-passos li::before {
+  content: counter(passo, decimal-leading-zero);
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 6px;
+  background: var(--superficie-2);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--texto-2);
+}
+
+.destaque {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 650;
+  font-size: 20px;
+  font-variation-settings: 'opsz' 24;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+}
+
+.conectar-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Moldura no tema; o QR em si é sempre preto sobre branco (--qr-*), com zona de silêncio. */
+.qr-moldura {
+  width: 312px;
+  height: 312px;
+  padding: 12px;
+  border-radius: var(--raio-painel);
+  background: var(--superficie);
+  border: 1px solid var(--linha-forte);
+  box-shadow: 0 1px 0 var(--linha);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr {
+  box-sizing: content-box;
+  padding: 10px;
+  border-radius: 6px;
+  background: var(--qr-fundo);
+  image-rendering: pixelated;
+}
+
+.qr-carregando,
+.qr-expirado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--texto-2);
+}
+
+.qr-carregando {
+  position: relative;
+}
+
+.qr-carregando span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+}
+
+.qr-expirado p {
+  margin: 0;
+  color: var(--texto);
+}
+
+.texto-qr {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 8px 0 0;
+  text-align: center;
+  color: var(--texto);
+}
+
+.conectar-sincronizando {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.conectar-sincronizando p {
+  margin: 0;
+  color: var(--texto-2);
+}
+
+.icone-ok {
+  color: var(--ciano);
+}
+
+/* ---------------------------------------------------------------- ajustes */
+
+.ajustes {
+  padding-left: max(28px, calc((100% - 920px) / 2));
+  padding-right: max(28px, calc((100% - 920px) / 2));
+}
+
+.ajustes .cartao {
+  border-radius: var(--raio-painel);
+}
+
+.lista-contas {
+  display: flex;
+  flex-direction: column;
+}
+
+.linha-conta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linha);
+  flex-wrap: wrap;
+}
+
+.linha-conta:last-child {
+  border-bottom-color: transparent;
+}
+
+.linha-conta-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 200px;
+}
+
+.linha-conta-textos strong {
+  font-weight: 600;
+}
+
+/* Telefone em mono (como na landing); o estado volta à fonte da interface. */
+.linha-conta-textos small {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.linha-conta-textos small .estado-conta {
+  font-family: var(--fonte);
+}
+
+.linha-conta-acoes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Comandos do "Usar com Claude": tela escura, como o terminal da landing. */
+.bloco-codigo {
+  --texto: var(--tela-texto);
+  --texto-2: var(--tela-texto-2);
+  --linha-forte: var(--tela-texto-2);
+  --fundo-2: var(--tela-2);
+  --foco: var(--tela-sinal);
+  color-scheme: dark;
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: var(--raio-tecla);
+  border: 1px solid var(--tela-linha);
+  background: var(--tela);
+  color: var(--tela-texto);
+}
+
+.bloco-codigo pre {
+  flex: 1;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  user-select: text;
+  line-height: 1.6;
+  color: var(--tela-texto);
+}
+
+.ajustes p {
+  margin: 0;
+}
+
+/* Aparência (T039): controle segmentado como o seletor de idioma da landing. */
+.seletor-tema {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--fundo);
+}
+
+.opcao-tema {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--texto-2);
+  cursor: pointer;
+  transition: color 0.15s var(--ease-mesa), background-color 0.15s var(--ease-mesa);
+}
+
+.opcao-tema:hover {
+  color: var(--texto);
+}
+
+/* O rádio nativo fica acessível (teclado/leitor) mas invisível; o rótulo é o segmento. */
+.opcao-tema input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.opcao-tema:has(input:checked) {
+  background: var(--superficie);
+  color: var(--texto);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--linha-forte);
+}
+
+.opcao-tema:has(input:focus-visible) {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.opcao-tema svg {
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- status */
+
+.visualizador-status {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.status-barras {
+  display: flex;
+  gap: 4px;
+}
+
+.status-barras span {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--raio-pilula);
+  background: color-mix(in srgb, var(--tela-texto) 28%, transparent);
+}
+
+.status-barras span.vista,
+.status-barras span.atual {
+  background: var(--tela-texto);
+}
+
+.status-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-cabecalho span {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-cabecalho strong {
+  font-weight: 600;
+  color: var(--tela-texto);
+}
+
+.status-cabecalho small {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  color: var(--tela-texto-2);
+}
+
+.status-conteudo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 0;
+}
+
+.status-conteudo .botao-icone {
+  color: var(--tela-texto);
+}
+
+.status-conteudo .botao-icone:hover:not(:disabled) {
+  background: var(--tela-2);
+}
+
+.status-texto {
+  flex: 1;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  border-radius: var(--raio-painel);
+  border: 1px solid var(--tela-linha);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-variation-settings: 'opsz' 48;
+  letter-spacing: -0.015em;
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--tela-texto);
+  white-space: pre-wrap;
+}
+
+.status-midia {
+  flex: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 0;
+}
+
+.status-midia img,
+.status-midia video {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: var(--raio-tecla);
+}
+
+.status-midia figcaption {
+  color: var(--tela-texto);
+}
+
+/* Estado vazio dentro da tela escura do status: tokens reapontados para --tela*. */
+.fundo-escuro .estado-vazio {
+  --texto: var(--tela-texto);
+  --texto-2: var(--tela-texto-2);
+  --superficie: var(--tela-2);
+  --linha-forte: var(--tela-linha);
+  --sinal-texto: var(--tela-sinal);
+  color: var(--tela-texto-2);
+}
+
+.fundo-escuro .estado-vazio h2 {
+  color: var(--tela-texto);
+}
+
+/* ---------------------------------------------------------------- ajustes de IA e automações */
+
+.grade-ajustes {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.interruptor-geral {
+  padding: 8px 0;
+}
+
+.linha-chave {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.linha-chave code {
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--linha);
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.lista-segredos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.lista-segredos li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--linha);
+}
+
+.lista-segredos li:last-child {
+  border-bottom-color: transparent;
+}
+
+.lista-segredos small {
+  flex: 1;
+}
+
+.painel-secao h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

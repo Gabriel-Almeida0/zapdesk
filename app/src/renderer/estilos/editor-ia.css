@@ -1,0 +1,380 @@
+/* editor-ia.css — editor de IA (código).
+ * Dono: B8 (editor de IA).
+ * Origem (divisão mecânica T008; restilizado em T049): automacoes.css 835–1073; automacoes.css 1348–1356 (@media, parte).
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- editor de IA */
+/* Receita "Editor de código" (vocabulario-visual.md): árvore de arquivos em --superficie-2 com
+ * nomes mono, abas mono, o código na tela escura (--tela, como o CodeBlock da landing) e o painel
+ * de teste em --superficie. */
+
+.corpo-editor-ia {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 340px;
+  gap: 0;
+  margin: 0 -20px;
+  border-top: 1px solid var(--linha);
+}
+
+/* ---- árvore de arquivos */
+
+.arvore-arquivos {
+  min-height: 0;
+  overflow-y: auto;
+  border-right: 1px solid var(--linha);
+  background: var(--superficie-2);
+  font-family: var(--fonte-mono);
+  font-size: 12.5px;
+  font-variant-ligatures: none;
+}
+
+.arvore-arquivos ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 12px;
+}
+
+.arvore-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 8px 8px 12px;
+  color: var(--texto-2);
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.arvore-pasta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  color: var(--texto-2);
+}
+
+.arvore-arquivo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--texto-2);
+}
+
+.arvore-arquivo > button {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.arvore-arquivo:hover {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.arvore-arquivo.ativo {
+  background: var(--fundo-2);
+  color: var(--texto);
+  font-weight: 600;
+}
+
+/* Barra âmbar do item ativo (como o item de conversa ativo). */
+.arvore-arquivo.ativo::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--sinal);
+}
+
+.arvore-arquivo.com-erro .arvore-nome {
+  color: var(--coral);
+  text-decoration: underline wavy var(--coral);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.arvore-nome {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.arvore-acoes {
+  display: none;
+}
+
+.arvore-arquivo:hover .arvore-acoes,
+.arvore-arquivo:focus-within .arvore-acoes {
+  display: flex;
+}
+
+/* Arquivo não salvo: a lâmpada âmbar. */
+.ponto-sujo {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sinal);
+  box-shadow: inset 0 0 0 1px var(--borda-primario);
+  flex: none;
+}
+
+/* ---- área do código */
+
+.area-codigo {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--superficie);
+}
+
+.abas-arquivos {
+  display: flex;
+  align-items: stretch;
+  min-height: 36px;
+  overflow-x: auto;
+  background: var(--superficie-2);
+  border-bottom: 1px solid var(--linha);
+}
+
+.aba-arquivo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px 0 12px;
+  border-right: 1px solid var(--linha);
+  font-family: var(--fonte-mono);
+  font-size: 12px;
+  font-variant-ligatures: none;
+  color: var(--texto-2);
+}
+
+.aba-arquivo button[role='tab'] {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.aba-arquivo:hover {
+  color: var(--texto);
+}
+
+.aba-arquivo.ativa {
+  background: var(--superficie);
+  color: var(--texto);
+  font-weight: 600;
+  box-shadow: inset 0 2px 0 var(--sinal);
+}
+
+.status-compilacao {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  font-family: var(--fonte-mono);
+  font-size: 11.5px;
+  font-variant-ligatures: none;
+  color: var(--texto-2);
+  white-space: nowrap;
+}
+
+.status-compilacao::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex: none;
+}
+
+.status-compilacao.ok {
+  color: var(--ciano);
+}
+
+.status-compilacao.ok::before {
+  background: currentColor;
+}
+
+.status-compilacao.erro {
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.status-compilacao.erro::before {
+  background: currentColor;
+}
+
+/* O código fica na tela escura nos dois temas (Monaco com o tema `zapdesk-tela`). */
+.editor-codigo {
+  flex: 1;
+  min-height: 200px;
+  position: relative;
+  background: var(--tela);
+  border-bottom: 1px solid var(--tela-linha);
+}
+
+.editor-codigo > .texto-secundario {
+  color: var(--tela-texto-2);
+}
+
+.carregando-editor {
+  padding: 24px;
+  color: var(--tela-texto-2);
+  font-family: var(--fonte-mono);
+  font-size: 12px;
+}
+
+/* ---- problemas */
+
+.painel-problemas {
+  max-height: 150px;
+  overflow-y: auto;
+  border-top: 1px solid var(--linha);
+  background: var(--superficie);
+  font-size: 12.5px;
+}
+
+.painel-problemas-cabecalho {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 7px 12px 6px;
+  position: sticky;
+  top: 0;
+  background: var(--superficie);
+}
+
+.painel-problemas-cabecalho strong {
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto);
+}
+
+.painel-problemas-cabecalho .texto-secundario {
+  font-family: var(--fonte-mono);
+  font-size: 11.5px;
+}
+
+.painel-problemas ul {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 6px;
+}
+
+.problema {
+  display: block;
+  width: 100%;
+  padding: 3px 12px;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--sinal-texto);
+}
+
+.problema.erro {
+  color: var(--coral);
+}
+
+.problema .mono {
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.problema:hover {
+  background: var(--fundo-2);
+}
+
+.nota-isolamento {
+  margin: 0;
+  padding: 8px 12px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--texto-2);
+  background: var(--superficie-2);
+  border-top: 1px solid var(--linha);
+}
+
+/* Permissões como pílulas mono (como "automacao.json" na landing). Inline e sem padding vertical:
+ * a altura da nota não muda; o texto (com as vírgulas) é o mesmo. 003 T052, pendência B8. */
+.nota-isolamento .permissao {
+  padding: 0 6px;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+/* ---- painel de teste */
+
+.painel-teste {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 16px 24px;
+  border-left: 1px solid var(--linha);
+  background: var(--superficie);
+}
+
+.painel-teste h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.painel-teste h2 svg {
+  color: var(--sinal-texto);
+}
+
+.painel-teste > [role='status'] > h3 {
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-2);
+}
+
+.painel-teste .campo {
+  margin-bottom: 4px;
+}
+
+.painel-teste .lista-definicoes.em-linha,
+.coluna-lateral .lista-definicoes.em-linha,
+.chat-simulado .lista-definicoes.em-linha {
+  grid-template-columns: max-content 1fr;
+}
+
+@media (max-width: 1180px) {
+  .corpo-editor-ia {
+    grid-template-columns: 180px minmax(0, 1fr) 300px;
+  }
+}

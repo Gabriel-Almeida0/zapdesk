@@ -1,0 +1,117 @@
+/* Tokens visuais do ZapDesk — sistema "mesa de operação" da landing.
+ * Contrato: specs/003-identidade-visual/contracts/tokens.md (nomes, valores, usos permitidos).
+ * Fonte dos valores: zapdesk-site/src/app/globals.css (mesmos nomes e valores; aqui o atributo do
+ * tema manual é `data-tema="claro" | "escuro"` no <html>; ausente = segue o sistema).
+ * ÚNICO arquivo com cores literais no renderer (scripts/verificar-tokens.mjs). Nada verde.
+ * `--sinal` é PREENCHIMENTO; âmbar como texto/ícone/link = `--sinal-texto`.
+ * Os 3 blocos de cor (claro, escuro pelo sistema, escuro manual) são lidos por scripts/contraste.mjs:
+ * ao mudar um valor, mude nos blocos escuros juntos e rode `npm run contraste -w @zapdesk/app`. */
+
+/* ---------------------------------------------------------------- claro (padrão) */
+:root {
+  color-scheme: light;
+
+  /* §1 base (iguais à landing) */
+  --fundo: #f4f1e8;
+  --fundo-2: #eae5d7;
+  --superficie: #ffffff;
+  --superficie-2: #f9f7f1;
+  --texto: #15171a;
+  --texto-2: #545a63;
+  --linha: #d6cfbf;
+  --linha-forte: #857e70;
+  --sinal: #ffb020;
+  --sinal-hover: #ffc24d;
+  --sinal-texto: #8a5300;
+  --coral: #b23c1c;
+  --ciano: #0f6676;
+  --tinta: #121417;
+  --borda-primario: #15171a;
+  --foco: #8a5300;
+  --pontos: rgb(21 23 26 / 0.1);
+  --tecla-sombra: #c98500;
+
+  /* tela escura (editor de código, terminal, visualizador) — igual nos dois temas */
+  --tela: #0a0c0f;
+  --tela-2: #14171b;
+  --tela-linha: #262b33;
+  --tela-texto: #ece8df;
+  --tela-texto-2: #a3a9b3;
+  --tela-sinal: #ffb020;
+  --tela-ciano: #6cc8dc;
+  --tela-coral: #ff8a6b;
+
+  /* §2 derivados do app (só a partir dos base; seguem o tema sozinhos) */
+  --sinal-suave: color-mix(in srgb, var(--sinal) 16%, var(--superficie));
+  --coral-suave: color-mix(in srgb, var(--coral) 12%, var(--superficie));
+  --ciano-suave: color-mix(in srgb, var(--ciano) 12%, var(--superficie));
+  --sobreposicao: rgb(21 23 26 / 0.32);
+  --sombra-painel: 0 1px 0 var(--linha), 0 24px 48px -24px rgb(0 0 0 / 0.25);
+  --remetente-l: 28%; /* 34% do plano reprovava matizes amarelos (3,6:1); 28% passa AA nos 12 */
+  --qr-fundo: #ffffff;
+  --qr-tinta: #000000;
+
+  /* forma, tipo e movimento */
+  --raio-tecla: 10px;
+  --raio-painel: 14px;
+  --raio-pilula: 999px;
+  --raio-bolha: 10px;
+  --fonte-titulo: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --fonte: 'Instrument Sans Variable', -apple-system, system-ui, sans-serif;
+  --fonte-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease-mesa: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------------------------------------------------------------- escuro (sistema, sem escolha manual) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='claro']) {
+    color-scheme: dark;
+    --fundo: #0e1013;
+    --fundo-2: #14171b;
+    --superficie: #1a1e23;
+    --superficie-2: #222730;
+    --texto: #ece8df;
+    --texto-2: #a3a9b3;
+    --linha: #2c323b;
+    --linha-forte: #737b88;
+    --sinal: #ffb020;
+    --sinal-hover: #ffc24d;
+    --sinal-texto: #ffb020;
+    --coral: #ff8a6b;
+    --ciano: #6cc8dc;
+    --tinta: #121417;
+    --borda-primario: transparent;
+    --foco: #ffb020;
+    --pontos: rgb(236 232 223 / 0.07);
+    --sobreposicao: rgb(0 0 0 / 0.55);
+    --remetente-l: 72%;
+  }
+}
+
+/* ---------------------------------------------------------------- escuro (escolha manual em Ajustes) */
+:root[data-tema='escuro'] {
+  color-scheme: dark;
+  --fundo: #0e1013;
+  --fundo-2: #14171b;
+  --superficie: #1a1e23;
+  --superficie-2: #222730;
+  --texto: #ece8df;
+  --texto-2: #a3a9b3;
+  --linha: #2c323b;
+  --linha-forte: #737b88;
+  --sinal: #ffb020;
+  --sinal-hover: #ffc24d;
+  --sinal-texto: #ffb020;
+  --coral: #ff8a6b;
+  --ciano: #6cc8dc;
+  --tinta: #121417;
+  --borda-primario: transparent;
+  --foco: #ffb020;
+  --pontos: rgb(236 232 223 / 0.07);
+  --sobreposicao: rgb(0 0 0 / 0.55);
+  --remetente-l: 72%;
+}
+
+:root[data-tema='claro'] {
+  color-scheme: light;
+}

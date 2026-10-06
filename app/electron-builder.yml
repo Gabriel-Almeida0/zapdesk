@@ -1,0 +1,49 @@
+# Empacotamento do ZapDesk (macOS arm64, .dmg). Rodar via scripts/empacotar.sh, que antes compila o
+# motor para resources/bin/, o bundle do MCP em ../mcp/dist/ e o do runner em ../automacao/runner/dist/.
+appId: com.gabriel.zapdesk
+productName: ZapDesk
+copyright: Gabriel Almeida
+directories:
+  output: dist
+  buildResources: resources
+# Tudo que o app usa em runtime já está nos bundles do electron-vite (out/); nada de node_modules.
+files:
+  - out/**
+  - resources/bandejaTemplate.png
+  - resources/bandejaTemplate@2x.png
+  - package.json
+  - '!**/*.map'
+npmRebuild: false
+nodeGypRebuild: false
+extraResources:
+  # Motor Go (CGO_ENABLED=0, darwin/arm64) → Contents/Resources/bin/zapdesk-motor
+  - from: resources/bin/zapdesk-motor
+    to: bin/zapdesk-motor
+  # Servidor MCP → Contents/Resources/mcp/zapdesk-mcp.mjs (roda com ELECTRON_RUN_AS_NODE=1)
+  - from: ../mcp/dist/zapdesk-mcp.mjs
+    to: mcp/zapdesk-mcp.mjs
+  # Runner das automações de IA → Contents/Resources/runner/zapdesk-runner.mjs (o motor o executa
+  # com o binário do app + ELECTRON_RUN_AS_NODE=1; specs/002-automacoes/contracts/runtime.md)
+  - from: ../automacao/runner/dist/zapdesk-runner.mjs
+    to: runner/zapdesk-runner.mjs
+# O MCP e o runner das automações são executados pelo próprio binário do app com
+# ELECTRON_RUN_AS_NODE=1: o fuse RunAsNode precisa continuar ligado.
+electronFuses:
+  runAsNode: true
+mac:
+  target:
+    - target: dmg
+      arch: [arm64]
+  category: public.app-category.productivity
+  icon: resources/icone.png
+  # Sem Apple Developer ID no MVP: assinatura ad-hoc (o Apple Silicon exige alguma assinatura).
+  identity: '-'
+  hardenedRuntime: false
+  gatekeeperAssess: false
+  minimumSystemVersion: '14.0'
+  extendInfo:
+    NSMicrophoneUsageDescription: O ZapDesk usa o microfone para gravar áudios nas conversas.
+    LSMultipleInstancesProhibited: true
+dmg:
+  artifactName: ZapDesk-${version}-${arch}.${ext}
+  title: ZapDesk ${version}

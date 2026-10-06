@@ -1,0 +1,488 @@
+/* disparos.css — lista, assistente, detalhe/relatório.
+ * Dono: B3 (disparos e relatório).
+ * Origem (divisão mecânica T008): app.css 2689–2732; app.css 2765–2856; app.css 2885–3082.
+ * Restilizado em T031/T032 conforme DisparoMockup e RelatorioMockup da landing.
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- lista de disparos */
+
+.lista-disparos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Cartão de disparo: --superficie, borda --linha; hover = --superficie-2 + borda mais firme. */
+.cartao-disparo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    background 0.15s var(--ease-mesa),
+    border-color 0.15s var(--ease-mesa);
+}
+
+.cartao-disparo:hover {
+  background: var(--superficie-2);
+  border-color: var(--linha-forte);
+}
+
+.cartao-disparo-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cartao-disparo-topo strong {
+  flex: 1;
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-weight: 600;
+  font-size: 15.5px;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+}
+
+.cartao-disparo-linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.cartao-disparo-conta {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+}
+
+/* ---------------------------------------------------------------- progresso */
+
+/* Trilho --linha; ok = --sinal; falhou = --coral. */
+.barra-progresso {
+  display: flex;
+  height: 8px;
+  border-radius: var(--raio-pilula);
+  background: var(--linha);
+  overflow: hidden;
+}
+
+.barra-ok {
+  background: var(--sinal);
+  transition: width 0.4s var(--ease-mesa);
+}
+
+.barra-falhou {
+  background: var(--coral);
+  transition: width 0.4s var(--ease-mesa);
+}
+
+.progresso-topo {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--texto-2);
+}
+
+.percentual {
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--texto);
+}
+
+.estado-linha {
+  margin-left: auto;
+  color: var(--texto-2);
+}
+
+/* Contadores: cartões --superficie borda --linha; número em --fonte-titulo. */
+.contadores {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.contador {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--superficie);
+}
+
+.contador strong {
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.contador span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--texto-2);
+  font-size: 12px;
+}
+
+.contador-lido strong,
+.contador-respondeu strong {
+  color: var(--ciano);
+}
+
+.contador-falhou strong {
+  color: var(--coral);
+}
+
+/* ---------------------------------------------------------------- selo de destinatário (R8)
+ * Mesma pílula do .selo-estado, compacta para caber na linha da tabela virtual (altura fixa).
+ * Positivo (lido, respondeu) = --ciano; falha = --coral; ativo (enviando) = lâmpada;
+ * neutro (pendente, enviado, entregue) = --texto-2. */
+.selo-destinatario {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 8px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+  color: var(--texto-2);
+  font-size: 11.5px;
+  line-height: 18px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.selo-destinatario.estado-enviando {
+  color: var(--texto);
+  border-color: var(--linha-forte);
+}
+
+.selo-destinatario.estado-enviando::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+}
+
+.selo-destinatario.estado-lido {
+  color: var(--ciano);
+  border-color: color-mix(in srgb, var(--ciano) 40%, transparent);
+}
+
+.selo-destinatario.estado-respondeu {
+  color: var(--ciano);
+  border-color: color-mix(in srgb, var(--ciano) 45%, transparent);
+  background: var(--ciano-suave);
+}
+
+.selo-destinatario.estado-falhou {
+  color: var(--coral);
+  border-color: color-mix(in srgb, var(--coral) 45%, transparent);
+  background: var(--coral-suave);
+}
+
+/* ---------------------------------------------------------------- mensagem do disparo */
+
+.mensagem-disparo summary {
+  cursor: pointer;
+  width: fit-content;
+  color: var(--texto-2);
+  font-size: 13px;
+}
+
+.mensagem-disparo summary:hover {
+  color: var(--texto);
+}
+
+.mensagem-disparo[open] summary {
+  margin-bottom: 8px;
+}
+
+.mensagem-disparo .pre {
+  margin: 0 0 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--superficie);
+}
+
+/* ---------------------------------------------------------------- assistente: stepper
+ * Sublinhado 3 px. Atual: --sinal + número sobre --sinal em --tinta + lâmpada.
+ * Feita: --ciano com visto. Futura: --linha. */
+.etapas {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.etapas li {
+  flex: 1;
+  min-width: 0;
+}
+
+.etapas button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px;
+  border: 0;
+  border-bottom: 3px solid var(--linha);
+  background: none;
+  color: var(--texto-2);
+  font-size: 13px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s var(--ease-mesa);
+}
+
+.etapas button:disabled {
+  cursor: default;
+}
+
+.etapas button:not(:disabled):hover {
+  color: var(--texto);
+}
+
+.etapa-nome {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.etapas .lampada {
+  margin: 0 6px 0 auto;
+}
+
+.etapa-numero {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-pilula);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.etapas li.atual button {
+  color: var(--texto);
+  border-bottom-color: var(--sinal);
+  font-weight: 600;
+}
+
+.etapas li.atual .etapa-numero {
+  background: var(--sinal);
+  border-color: var(--sinal);
+  color: var(--tinta);
+  font-weight: 600;
+}
+
+.etapas li.feita button {
+  color: var(--ciano);
+  border-bottom-color: color-mix(in srgb, var(--ciano) 50%, transparent);
+}
+
+.etapas li.feita .etapa-numero {
+  border-color: var(--ciano);
+}
+
+/* ---------------------------------------------------------------- assistente: cartão e rodapé */
+
+.rodape-assistente {
+  position: sticky;
+  bottom: -20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  background: var(--fundo);
+  border-top: 1px solid var(--linha);
+}
+
+.passo {
+  display: flex;
+  flex-direction: column;
+}
+
+.passo-mensagem {
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.coluna-editor {
+  flex: 1;
+  min-width: 0;
+}
+
+.coluna-previa {
+  width: 340px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------- prévia da mensagem
+ * Fundo da conversa (--fundo) com a bolha "minha" de B2: --superficie-2 + borda --linha-forte,
+ * canto superior direito 3 px. Nada verde. */
+.previa-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background-color: var(--fundo);
+  min-height: 120px;
+}
+
+.previa-chat .previa-bolha {
+  align-self: flex-end;
+  max-width: 100%;
+  background: var(--superficie-2);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-bolha);
+  border-top-right-radius: 3px;
+  box-shadow: none;
+  color: var(--texto);
+}
+
+.previa-bolha .texto-mensagem {
+  padding-right: 0;
+}
+
+.previa-anexo {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--texto-2);
+  font-size: 12.5px;
+}
+
+/* ---------------------------------------------------------------- passo Lista */
+
+.resumo-lista {
+  padding: 12px 16px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  margin-bottom: 14px;
+}
+
+.resumo-lista strong {
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.fontes {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fonte {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  padding: 10px 14px;
+}
+
+.fonte-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.fonte-cabecalho strong {
+  flex: 1;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- passo Revisão: faltando */
+
+/* Como .faixa-aviso: --sinal-suave com borda esquerda 2 px --sinal, texto --texto. */
+.faltando {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  border-left: 2px solid var(--sinal);
+  border-radius: 0 var(--raio-tecla) var(--raio-tecla) 0;
+  background: var(--sinal-suave);
+  color: var(--texto);
+}
+
+.faltando .campo {
+  margin: 4px 0 0;
+}
+
+.faltando .campo input {
+  color: var(--texto);
+}
+
+.faltando summary {
+  cursor: pointer;
+  width: fit-content;
+  color: var(--texto-2);
+}
+
+.lista-faltando {
+  max-height: 160px;
+  overflow: auto;
+  margin: 4px 0;
+  padding-left: 18px;
+  font-size: 13px;
+}
+
+.resumo-disparo {
+  margin-bottom: 14px;
+}
+
+.estimativa {
+  margin: 0;
+  color: var(--texto-2);
+}
+
+.estimativa-valor {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12.5px;
+  color: var(--texto);
+}

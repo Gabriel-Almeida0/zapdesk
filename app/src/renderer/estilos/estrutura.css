@@ -1,0 +1,627 @@
+/* estrutura.css — telas genéricas, faixas, esqueleto, menus flutuantes, modais, visualizador, tabelas, selo de estado, lista de definições.
+ * Dono: fundação (compartilhado — blocos só leem).
+ * Origem (T008): app.css 652–884; app.css 967–1096; app.css 2482–2569; app.css 2733–2764; app.css 2857–2884; restilizado na fundação (T015) só com tokens novos.
+ * Tamanhos preservados (alturas de linhas de tabela/lista inalteradas — research R5).
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- telas genéricas */
+
+.tela {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 28px;
+  gap: 16px;
+  overflow: hidden;
+  background: var(--fundo);
+}
+
+.tela-rolavel {
+  overflow-y: auto;
+}
+
+.tela-rolavel > * {
+  flex: none;
+}
+
+.tela-lista > .lista-virtual,
+.tela-lista > .tabela-virtual {
+  flex: 1;
+  min-height: 0;
+}
+
+.tela-centro {
+  align-items: center;
+  overflow-y: auto;
+}
+
+/* Cabeçalho de tela: título --fonte-titulo; voltar = .botao-icone; ações à direita. */
+.cabecalho-tela {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding-top: 14px;
+}
+
+.cabecalho-tela h1 {
+  flex: 1;
+  font-family: var(--fonte-titulo);
+  font-weight: 650;
+  font-variation-settings: 'opsz' 24;
+  letter-spacing: -0.015em;
+  color: var(--texto);
+}
+
+.cabecalho-tela .acoes-cabecalho {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.barra-ferramentas {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Cartão: --superficie, borda --linha, raio 10, sem sombra. */
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Variação recuada (003 T052, pendência B3): cartão em --superficie-2, como os passos do
+ * DisparoMockup e o RelatorioMockup; campos/contadores em --superficie destacam por cima. */
+.cartao.cartao-recuado {
+  background: var(--superficie-2);
+}
+
+.cartao h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cartao-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tela-dividida {
+  flex-direction: row;
+  padding: 0;
+  gap: 0;
+}
+
+.tela-dividida > .painel-lista {
+  width: 360px;
+  flex: none;
+  border-right: 1px solid var(--linha);
+  background: var(--superficie);
+  padding: 0 14px 14px;
+}
+
+.tela-dividida > .painel-detalhe {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 44px 28px 28px;
+  background: var(--fundo);
+}
+
+/* Área na "tela escura" (visualizador de status/mídia): igual nos dois temas. */
+.fundo-escuro {
+  background: var(--tela) !important;
+  color: var(--tela-texto);
+}
+
+/* Estado vazio: ícone em quadrado 40 px com borda --linha-forte, ícone --sinal-texto. */
+.estado-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 24px;
+  color: var(--texto-2);
+  flex: 1;
+}
+
+.estado-vazio h2 {
+  color: var(--texto);
+  font-family: var(--fonte-titulo);
+  font-weight: 650;
+  font-size: 20px;
+}
+
+.estado-vazio p {
+  max-width: 420px;
+  margin: 0;
+  color: var(--texto-2);
+}
+
+.estado-vazio-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  width: 28px;
+  height: 28px;
+  padding: 6px;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  color: var(--sinal-texto);
+  margin-bottom: 8px;
+}
+
+.estado-vazio-icone svg {
+  width: 28px;
+  height: 28px;
+}
+
+.estado-vazio-acao {
+  margin-top: 12px;
+}
+
+.tela-erro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px;
+  text-align: center;
+  color: var(--texto-2);
+}
+
+.tela-erro svg {
+  color: var(--coral);
+}
+
+.tela-erro p {
+  margin: 0 0 8px;
+}
+
+/* ---------------------------------------------------------------- faixas
+ * Fundo suave do tom + borda esquerda 2 px no tom; texto --texto (AA garantido). */
+.faixa {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 2px solid transparent;
+  font-size: 13.5px;
+  color: var(--texto);
+}
+
+.faixa-texto {
+  flex: 1;
+}
+
+.faixa-aviso {
+  background: var(--sinal-suave);
+  border-left-color: var(--sinal);
+}
+
+.faixa-aviso svg {
+  color: var(--sinal-texto);
+}
+
+.faixa-erro {
+  background: var(--coral-suave);
+  border-left-color: var(--coral);
+}
+
+.faixa-erro svg {
+  color: var(--coral);
+}
+
+.faixa-info {
+  background: var(--ciano-suave);
+  border-left-color: var(--ciano);
+}
+
+.faixa-info svg {
+  color: var(--ciano);
+}
+
+.painel-lista > .faixa {
+  border-radius: 0;
+  margin: 0 -14px;
+}
+
+/* ---------------------------------------------------------------- esqueleto */
+@keyframes brilho {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.esqueleto {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--fundo-2) 0, var(--superficie-2) 50%, var(--fundo-2) 100%);
+  background-size: 400px 100%;
+  animation: brilho 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esqueleto {
+    animation: none;
+    background: var(--fundo-2);
+  }
+}
+
+.esqueleto.redondo {
+  border-radius: 50%;
+}
+
+.esqueleto-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.esqueleto-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 11px 0;
+}
+
+.esqueleto-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---------------------------------------------------------------- menus flutuantes e modais
+ * Menu: --superficie, borda --linha, --sombra-painel, raio 10; hover --fundo-2. */
+
+.menu-flutuante {
+  position: absolute;
+  z-index: 30;
+  min-width: 220px;
+  padding: 6px 0;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  box-shadow: var(--sombra-painel);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 16px;
+  border: 0;
+  background: none;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-item:hover:not(:disabled) {
+  background: var(--fundo-2);
+}
+
+.menu-item:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.menu-item-textos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-item-textos small {
+  color: var(--texto-2);
+  font-size: 12px;
+}
+
+.menu-item-icone {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raio-tecla);
+  border: 1.5px solid var(--borda-primario);
+  background: var(--sinal);
+  color: var(--tinta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-separador {
+  height: 1px;
+  background: var(--linha);
+  margin: 6px 0;
+}
+
+/* Modal: --sobreposicao; caixa --superficie, borda --linha, raio --raio-painel, --sombra-painel;
+ * cabeçalho como a barra do MockWindow (--superficie-2 + divisória). */
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--sobreposicao);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  max-width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-painel);
+  box-shadow: var(--sombra-painel);
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 12px 8px 22px;
+  background: var(--superficie-2);
+  border-bottom: 1px solid var(--linha);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.modal-cabecalho h2 {
+  font-size: 16px;
+}
+
+.modal-corpo {
+  padding: 8px 22px 16px;
+  overflow-y: auto;
+}
+
+.modal-rodape {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 22px 18px;
+}
+
+.texto-modal {
+  margin: 0;
+  color: var(--texto-2);
+}
+
+/* Visualizador de mídia: tela escura. */
+.visualizador {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--tela) 94%, transparent);
+  color: var(--tela-texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visualizador img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+}
+
+.visualizador-fechar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: var(--tela-texto);
+}
+
+.visualizador .botao-icone:hover:not(:disabled) {
+  background: var(--tela-2);
+  color: var(--tela-texto);
+}
+
+/* ---------------------------------------------------------------- tabelas
+ * Cabeçalho --superficie-2 11–12 px 600 --texto-2; linhas com --linha; telefone/data mono
+ * (use .mono na célula). Alturas de linha inalteradas (listas virtuais). */
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabela th,
+.tabela td {
+  text-align: left;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--linha);
+  white-space: nowrap;
+}
+
+.tabela th {
+  color: var(--texto-2);
+  font-weight: 600;
+  font-size: 12px;
+  background: var(--superficie-2);
+  position: sticky;
+  top: 0;
+}
+
+.tabela th.coluna-telefone,
+.tabela th.coluna-nome {
+  color: var(--texto);
+}
+
+.tabela th.coluna-telefone::after,
+.tabela th.coluna-nome::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+}
+
+.tabela-rolavel {
+  overflow: auto;
+  max-height: 240px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--superficie);
+  margin-bottom: 14px;
+}
+
+.tabela-virtual {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tabela-virtual .lista-virtual {
+  margin: 0;
+}
+
+.tabela-virtual.altura-fixa {
+  height: 420px;
+}
+
+.linha-tabela {
+  display: grid;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  min-height: 40px;
+  border-bottom: 1px solid var(--linha);
+  font-size: 13.5px;
+  line-height: 20px;
+}
+
+.linha-tabela > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linha-tabela .mono {
+  font-size: 12.5px;
+}
+
+.linha-tabela.cabecalho {
+  color: var(--texto-2);
+  font-weight: 600;
+  background: var(--superficie-2);
+  font-size: 12px;
+}
+
+.leads-grade {
+  grid-template-columns: 170px minmax(140px, 1fr) 110px 110px 120px 110px;
+}
+
+.destinatarios-grade {
+  grid-template-columns: 48px 160px minmax(120px, 1fr) 110px 140px minmax(120px, 1fr);
+}
+
+/* ---------------------------------------------------------------- selo de estado (research R8)
+ * Pílula 11–12 px 500 com borda no tom. Neutro (agendado, na fila, fora da janela, pausado,
+ * cancelado, rascunho) = --texto-2 + --linha; ativo (enviando) = lâmpada + --texto;
+ * positivo (concluído) = --ciano; falha = --coral (.estado-falhou/.estado-erro). */
+.selo-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--superficie);
+  color: var(--texto-2);
+  white-space: nowrap;
+}
+
+.selo-estado.estado-enviando {
+  color: var(--texto);
+  border-color: var(--linha-forte);
+}
+
+.selo-estado.estado-enviando::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+}
+
+.selo-estado.estado-concluido {
+  color: var(--ciano);
+  border-color: color-mix(in srgb, var(--ciano) 45%, transparent);
+  background: var(--ciano-suave);
+}
+
+.selo-estado.estado-falhou,
+.selo-estado.estado-erro {
+  color: var(--coral);
+  border-color: color-mix(in srgb, var(--coral) 45%, transparent);
+  background: var(--coral-suave);
+}
+
+/* ---------------------------------------------------------------- lista de definições */
+.lista-definicoes {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.lista-definicoes dt {
+  color: var(--texto-2);
+  font-size: 12px;
+}
+
+.lista-definicoes dd {
+  margin: 0;
+  min-width: 0;
+  word-break: break-word;
+  color: var(--texto);
+}
+
+.lista-definicoes.em-linha {
+  grid-template-columns: repeat(3, max-content 1fr);
+  font-size: 13.5px;
+}
+
+.lista-definicoes .com-acao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}

@@ -1,0 +1,177 @@
+/* shell.css — layout, trilho, avatar, ponto de estado.
+ * Dono: B1 (shell e lista de conversas).
+ * Origem: app.css 512–651 (T008); restilizado em T023 conforme ChatMockup.
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- layout */
+
+.layout {
+  display: flex;
+  height: 100vh;
+  background: var(--superficie);
+}
+
+.conteudo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.conteudo > * {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Trilho (ChatMockup → Trilho): --superficie-2, divisores --linha, ícones 20 px --texto-2,
+ * ativo --fundo-2 + lâmpada âmbar à esquerda. Medidas de caixa iguais às antigas. */
+.trilho {
+  width: 64px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 44px 0 14px;
+  background: var(--superficie-2);
+  border-right: 1px solid var(--linha);
+  -webkit-app-region: drag;
+}
+
+.trilho-grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  -webkit-app-region: no-drag;
+}
+
+/* Grupo de baixo (Ajustes + conta): reserva a altura do avatar da conta, que chega depois do
+ * primeiro paint — sem isso o ícone de Ajustes subia 44 px na abertura (layout shift; 003 T061). */
+.trilho-grupo:last-child {
+  min-height: 86px;
+}
+
+.trilho-divisor {
+  width: 24px;
+  height: 1px;
+  background: var(--linha);
+  margin: 6px 0;
+}
+
+.item-trilho {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--texto-2);
+  transition:
+    background 0.15s var(--ease-mesa),
+    color 0.15s var(--ease-mesa);
+}
+
+.item-trilho svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.75;
+}
+
+.item-trilho:hover {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+.item-trilho.ativo {
+  background: var(--fundo-2);
+  color: var(--texto);
+}
+
+/* Lâmpada do item ativo (mesma receita de .lampada, base.css). */
+.item-trilho.ativo::before {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+}
+
+.selo-trilho {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border: 1px solid var(--borda-primario);
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+  color: var(--tinta);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trilho-conta {
+  position: relative;
+  display: flex;
+  margin-top: 8px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+
+.ponto-estado {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--superficie-2);
+  background: var(--texto-2);
+}
+
+.ponto-estado.estado-conectada {
+  background: var(--ciano);
+}
+
+.ponto-estado.estado-conectada.offline,
+.ponto-estado.estado-conectando {
+  background: var(--sinal);
+}
+
+.ponto-estado.estado-banida,
+.ponto-estado.estado-desconectada {
+  background: var(--coral);
+}
+
+/* Avatar neutro (ChatMockup → Avatar): iniciais em --fonte-titulo sobre --superficie-2.
+ * Contorno por box-shadow para não mudar a caixa. */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: 50%;
+  background: var(--superficie-2);
+  box-shadow: inset 0 0 0 1px var(--linha);
+  color: var(--texto-2);
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-decoration: none;
+}

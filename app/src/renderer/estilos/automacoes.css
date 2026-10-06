@@ -1,0 +1,919 @@
+/* automacoes.css — lista de automações, editores, execuções, chatbot.
+ * Dono: B7 (automações, editor de fluxo, execuções, chatbot).
+ * Origem (divisão mecânica T008): automacoes.css 411–745; automacoes.css 1074–1346; automacoes.css 1348–1356 (@media, parte).
+ * Restilo 003 (T045/T046): receitas "Nó de chatbot" e cabos/terminais de contracts/vocabulario-visual.md,
+ * alvo visual = ChatbotMockup da landing. Tokens: tema.css (contracts/tokens.md); só nomes novos. */
+
+/* ---------------------------------------------------------------- lista de automações */
+
+.linha-automacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 16px 4px 4px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  box-shadow: 0 1px 0 var(--linha);
+  transition: border-color 0.15s var(--ease-mesa), background 0.15s var(--ease-mesa);
+}
+
+.linha-automacao:hover {
+  border-color: var(--linha-forte);
+  background: var(--superficie-2);
+}
+
+.linha-automacao-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--raio-tecla);
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.linha-automacao-textos {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.linha-automacao-textos strong {
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+}
+
+/* Tipo · prioridade · descrição: linha de rótulo mono (como os rótulos da landing). */
+.linha-automacao-textos small {
+  font-family: var(--fonte-mono);
+  font-size: 11.5px;
+  font-variant-ligatures: none;
+  color: var(--texto-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linha-automacao-numeros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.linha-automacao-numeros small {
+  font-family: var(--fonte-mono);
+  font-size: 11.5px;
+  font-variant-ligatures: none;
+}
+
+.linha-automacao-erro {
+  flex-basis: 100%;
+  margin: 0 0 8px 60px;
+}
+
+.aviso-automacao {
+  color: var(--sinal-texto);
+  display: inline-flex;
+}
+
+/* Ícone do tipo: tecla quadrada neutra; a cor fica só no traço do ícone. */
+.icone-tipo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-tecla);
+  flex: none;
+  border: 1px solid var(--linha);
+  background: var(--superficie-2);
+  color: var(--sinal-texto);
+}
+
+.icone-tipo.tipo-chatbot {
+  color: var(--ciano);
+}
+
+.icone-tipo.tipo-ia {
+  color: var(--texto-2);
+}
+
+/* Automação ativa: lâmpada âmbar no canto da tecla (mesma receita de .lampada, base.css). */
+.linha-automacao:has(.interruptor.ligado) .icone-tipo::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+  box-shadow: 0 0 0 2px var(--superficie);
+}
+
+.linha-automacao:has(.interruptor.ligado):hover .icone-tipo::after {
+  box-shadow: 0 0 0 2px var(--superficie-2);
+}
+
+.grade-tipos,
+.grade-modelos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.opcao-tipo {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease-mesa);
+}
+
+.opcao-tipo:hover {
+  border-color: var(--linha-forte);
+}
+
+.opcao-tipo small,
+.opcao-modelo small {
+  color: var(--texto-2);
+}
+
+.opcao-modelo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  cursor: pointer;
+}
+
+.opcao-modelo input {
+  position: absolute;
+  opacity: 0;
+}
+
+.opcao-modelo.escolhida {
+  border-color: var(--sinal-texto);
+  background: var(--sinal-suave);
+  box-shadow: inset 3px 0 0 var(--sinal);
+}
+
+/* ---------------------------------------------------------------- editores */
+
+.tela-editor {
+  padding: 12px 20px 0;
+  gap: 10px;
+}
+
+.cabecalho-editor {
+  flex-wrap: wrap;
+  padding-top: 18px;
+}
+
+.nome-automacao {
+  flex: 1;
+  min-width: 200px;
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--texto);
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--raio-tecla);
+  background: transparent;
+  outline: none;
+}
+
+.nome-automacao:hover,
+.nome-automacao:focus {
+  border-color: var(--linha-forte);
+  background: var(--superficie);
+}
+
+.nome-automacao:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 2px;
+}
+
+h1.nome-automacao-fixo {
+  font-size: 20px;
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.abas-editor {
+  margin-bottom: 0;
+}
+
+.corpo-editor {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  overflow-y: auto;
+  padding-bottom: 24px;
+}
+
+.corpo-editor-rolavel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 24px;
+}
+
+.coluna-principal,
+.coluna-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Gatilho → condições → ações: blocos ligados por um cabo vertical com terminais redondos. */
+.coluna-principal {
+  gap: 22px;
+}
+
+.secao-editor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  box-shadow: 0 1px 0 var(--linha);
+}
+
+.secao-editor h2 {
+  font-size: 15px;
+  font-weight: 650;
+  font-variation-settings: 'opsz' 24;
+  letter-spacing: -0.01em;
+}
+
+/* Cabo no vão entre duas seções seguidas (atrás dos terminais). */
+.coluna-principal > .secao-editor + .secao-editor::before {
+  content: '';
+  position: absolute;
+  left: 31px;
+  top: -24px;
+  width: 1.5px;
+  height: 24px;
+  background: var(--linha-forte);
+}
+
+/* Terminal de entrada (topo) e de saída (base) — receita de .terminal-cabo (base.css). */
+.coluna-principal > .secao-editor + .secao-editor > h2:first-child::before,
+.coluna-principal > .secao-editor:has(+ .secao-editor)::after {
+  content: '';
+  position: absolute;
+  left: 28px;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--raio-pilula);
+  background: var(--fundo);
+  border: 1.5px solid var(--linha-forte);
+}
+
+.coluna-principal > .secao-editor + .secao-editor > h2:first-child::before {
+  top: -4px;
+}
+
+.coluna-principal > .secao-editor:has(+ .secao-editor)::after {
+  bottom: -4px;
+}
+
+.bloco-editor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px 4px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie-2);
+}
+
+.bloco-editor-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.bloco-editor-cabecalho select {
+  flex: 1;
+  min-height: 34px;
+  padding: 4px 10px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+  font-weight: 500;
+}
+
+.lista-acoes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Passos da lista de ações ligados pelo mesmo cabo, na linha do número. */
+.lista-acoes > .bloco-editor + .bloco-editor::before {
+  content: '';
+  position: absolute;
+  left: 26px;
+  top: -13px;
+  width: 1.5px;
+  height: 12px;
+  background: var(--linha-forte);
+}
+
+.numero-passo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--borda-primario);
+  background: var(--sinal);
+  color: var(--tinta);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  flex: none;
+}
+
+.previa-template {
+  margin: -6px 0 10px;
+  white-space: pre-wrap;
+  font-size: 13px;
+}
+
+.linha-form select {
+  min-height: 30px;
+  padding: 4px 8px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+.opcoes-radio select {
+  min-height: 30px;
+  padding: 2px 8px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+/* ---------------------------------------------------------------- execuções */
+
+.execucoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tabela-execucoes td {
+  vertical-align: top;
+}
+
+.linha-erro {
+  display: block;
+  max-width: 420px;
+  white-space: normal;
+}
+
+.resultado-execucao {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Subtítulos (Ações, Retorno, Log, Variáveis) como rótulo mono — receita de .rotulo (base.css). */
+.resultado-execucao h3 {
+  margin-top: 6px;
+  font-family: var(--fonte-mono);
+  font-variation-settings: normal;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-ligatures: none;
+  color: var(--texto-2);
+}
+
+.resultado-execucao .selo {
+  margin-right: 6px;
+}
+
+.resultado-execucao details summary {
+  cursor: pointer;
+  color: var(--texto-2);
+  font-size: 13px;
+}
+
+.resultado-execucao details[open] summary {
+  margin-bottom: 8px;
+}
+
+.acoes-registradas {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.acao-registrada {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.acao-detalhe {
+  flex-basis: 100%;
+  font-size: 13px;
+  color: var(--texto-2);
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+.tabela-tokens {
+  max-width: 480px;
+}
+
+/* ---------------------------------------------------------------- chatbot */
+
+.corpo-chatbot {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 -20px;
+}
+
+.paleta-nos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 20px;
+  border-top: 1px solid var(--linha);
+  border-bottom: 1px solid var(--linha);
+  background: var(--superficie);
+}
+
+.paleta-nos .chip {
+  height: 28px;
+  font-size: 12.5px;
+}
+
+.paleta-nos .chip svg {
+  color: var(--texto-2);
+}
+
+.area-chatbot {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* Canvas: tema do React Flow pelas variáveis --xy-* (as *-default do pacote ficam por baixo). */
+.canvas-bot {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--fundo);
+}
+
+.canvas-bot .react-flow {
+  --xy-background-color: var(--fundo);
+  --xy-background-pattern-color: var(--pontos);
+  --xy-edge-stroke: var(--linha-forte);
+  --xy-edge-stroke-width: 1.5;
+  --xy-edge-stroke-selected: var(--sinal);
+  --xy-edge-label-background-color: var(--superficie);
+  --xy-edge-label-color: var(--texto-2);
+  --xy-connectionline-stroke: var(--sinal);
+  --xy-connectionline-stroke-width: 2;
+  --xy-handle-background-color: var(--fundo);
+  --xy-handle-border-color: var(--linha-forte);
+  --xy-node-color: var(--texto);
+  --xy-node-background-color: var(--superficie);
+  --xy-node-border: 1px solid var(--linha);
+  --xy-node-border-radius: var(--raio-tecla);
+  --xy-node-boxshadow-hover: 0 1px 0 var(--linha);
+  --xy-node-boxshadow-selected: 0 0 0 1px var(--linha-forte);
+  --xy-node-group-background-color: var(--fundo-2);
+  --xy-selection-background-color: color-mix(in srgb, var(--sinal) 8%, transparent);
+  --xy-selection-border: 1px dashed var(--sinal-texto);
+  --xy-controls-button-background-color: var(--superficie);
+  --xy-controls-button-background-color-hover: var(--fundo-2);
+  --xy-controls-button-color: var(--texto-2);
+  --xy-controls-button-color-hover: var(--texto);
+  --xy-controls-button-border-color: var(--linha);
+  --xy-controls-box-shadow: 0 1px 0 var(--linha);
+  --xy-minimap-background-color: var(--superficie);
+  --xy-minimap-mask-background-color: color-mix(in srgb, var(--fundo-2) 70%, transparent);
+  --xy-minimap-mask-stroke-color: var(--linha-forte);
+  --xy-minimap-node-background-color: var(--superficie-2);
+  --xy-minimap-node-stroke-color: var(--linha-forte);
+  --xy-attribution-background-color: var(--superficie);
+}
+
+.canvas-bot .react-flow__controls {
+  overflow: hidden;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+}
+
+.canvas-bot .react-flow__controls-button {
+  width: 28px;
+  height: 28px;
+}
+
+.canvas-bot .react-flow__minimap {
+  overflow: hidden;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+}
+
+/* Cabos: 1,5 px --linha-forte; selecionado e caminho da simulação (aresta animada) em âmbar. */
+.canvas-bot .react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.canvas-bot .react-flow__edge.selected .react-flow__edge-path,
+.canvas-bot .react-flow__edge.animated .react-flow__edge-path {
+  stroke: var(--sinal);
+  stroke-width: 2;
+}
+
+.lateral-chatbot {
+  width: 330px;
+  flex: none;
+  min-height: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--linha);
+  background: var(--superficie);
+  padding: 0 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lateral-chatbot .abas {
+  position: sticky;
+  top: 0;
+  background: var(--superficie);
+  z-index: 1;
+  margin: 0 -16px;
+  padding: 0 8px;
+}
+
+.painel-no {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.painel-no h2 {
+  font-size: 15px;
+  font-weight: 650;
+  font-variation-settings: 'opsz' 24;
+  letter-spacing: -0.01em;
+}
+
+.painel-no-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.painel-no-cabecalho h2 {
+  flex: 1;
+}
+
+.painel-no-cabecalho code {
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-variant-ligatures: none;
+  padding: 1px 6px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-pilula);
+  background: var(--fundo);
+}
+
+.opcao-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.opcao-menu input {
+  flex: 1;
+  min-width: 0;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+/* Nó: cartão --superficie raio 10, cabeçalho --superficie-2 em mono 11 px com ícone (ChatbotMockup). */
+.no-bot {
+  width: 230px;
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  box-shadow: 0 1px 0 var(--linha);
+  color: var(--texto);
+  font-size: 12.5px;
+  transition: border-color 0.15s var(--ease-mesa), box-shadow 0.15s var(--ease-mesa);
+}
+
+.react-flow__node:hover > .no-bot {
+  border-color: var(--linha-forte);
+}
+
+.no-bot.selecionado {
+  border-color: var(--linha-forte);
+  box-shadow: 0 0 0 1px var(--linha-forte), var(--sombra-painel);
+}
+
+.no-bot.com-erro {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 1px var(--coral);
+}
+
+.no-bot.com-erro.selecionado {
+  box-shadow: 0 0 0 1px var(--coral), var(--sombra-painel);
+}
+
+/* Nó em que a simulação está: âmbar (o "caminho ativo" do mockup). */
+.no-bot.atual {
+  border-color: var(--sinal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sinal) 35%, transparent);
+}
+
+.no-bot-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--linha);
+  border-radius: calc(var(--raio-tecla) - 1px) calc(var(--raio-tecla) - 1px) 0 0;
+  background: var(--superficie-2);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--texto-2);
+}
+
+.no-bot-cabecalho > svg {
+  flex: none;
+  color: var(--texto-2);
+}
+
+.no-bot-cabecalho > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ícone em âmbar: início (a origem do caminho), nó selecionado e nó atual da simulação. */
+.no-bot.tipo-inicio .no-bot-cabecalho > svg:first-child,
+.no-bot.selecionado .no-bot-cabecalho > svg:first-child,
+.no-bot.atual .no-bot-cabecalho > svg:first-child {
+  color: var(--sinal-texto);
+}
+
+.no-bot.selecionado .no-bot-cabecalho,
+.no-bot.atual .no-bot-cabecalho {
+  color: var(--texto);
+}
+
+.no-bot-erro {
+  margin-left: auto;
+  color: var(--coral);
+}
+
+.no-bot-cabecalho > svg.no-bot-erro {
+  color: var(--coral);
+}
+
+.no-bot-corpo {
+  padding: 9px 10px;
+  color: var(--texto);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+.no-bot-saidas {
+  border-top: 1px solid var(--linha);
+  padding: 3px 0;
+}
+
+.no-bot-saida {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 3px 14px;
+  font-size: 11.5px;
+  color: var(--texto-2);
+}
+
+.no-bot-saida .texto-secundario {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 10.5px;
+}
+
+.no-bot-saida.livre:not(.opcional) span {
+  color: var(--coral);
+}
+
+/* Terminais = .terminal-cabo (7 px, --fundo, borda 1,5 --linha-forte); área de pega maior por fora. */
+.no-bot .react-flow__handle {
+  box-sizing: border-box;
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  min-height: 7px;
+  border-radius: var(--raio-pilula);
+  background: var(--fundo);
+  border: 1.5px solid var(--linha-forte);
+}
+
+.no-bot .react-flow__handle::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: var(--raio-pilula);
+}
+
+.no-bot .react-flow__handle:hover,
+.no-bot .react-flow__handle.connectingfrom,
+.no-bot .react-flow__handle.connectingto,
+.no-bot.selecionado .react-flow__handle,
+.no-bot.atual .react-flow__handle {
+  background: var(--sinal);
+}
+
+.no-bot-saida.opcional .react-flow__handle {
+  border-color: var(--texto-2);
+}
+
+.no-bot-saida.livre:not(.opcional) .react-flow__handle {
+  background: var(--coral-suave);
+  border-color: var(--coral);
+}
+
+.react-flow__edge.aresta-opcional path {
+  stroke-dasharray: 5 4;
+}
+
+/* Chat simulado: coluna como a conversa (B2) — cabeçalho e entrada em barras com linha. */
+.chat-simulado {
+  width: 300px;
+  flex: none;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--linha);
+  background: var(--fundo);
+}
+
+.chat-simulado-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 10px 6px 14px;
+  border-bottom: 1px solid var(--linha);
+  background: var(--superficie);
+}
+
+.chat-simulado-cabecalho strong {
+  flex: 1;
+  font-family: var(--fonte-titulo);
+  font-variation-settings: 'opsz' 24;
+  font-weight: 650;
+}
+
+.chat-simulado-mensagens {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+}
+
+.chat-simulado-mensagens .bolha {
+  max-width: 88%;
+  padding: 6px 10px;
+}
+
+.chat-simulado-entrada {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border-top: 1px solid var(--linha);
+  background: var(--superficie);
+}
+
+.chat-simulado-entrada input {
+  flex: 1;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--fundo);
+  color: var(--texto);
+  outline: none;
+}
+
+.chat-simulado-entrada input:focus-visible {
+  border-color: var(--linha-forte);
+  outline: 2px solid var(--foco);
+  outline-offset: 1px;
+}
+
+.chat-simulado-estado {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 8px 14px;
+  background: var(--superficie);
+  border-top: 1px solid var(--linha);
+  font-size: 12.5px;
+}
+
+.chat-simulado-estado summary {
+  cursor: pointer;
+  color: var(--texto-2);
+}
+
+.chat-simulado-estado dd {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+}
+
+.variavel-simulada {
+  display: contents;
+}
+
+@media (max-width: 1180px) {
+  .corpo-editor {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

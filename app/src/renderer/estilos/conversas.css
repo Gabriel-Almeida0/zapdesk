@@ -1,0 +1,329 @@
+/* conversas.css — lista de conversas, busca de mensagens.
+ * Dono: B1 (shell e lista de conversas).
+ * Origem: app.css 1097–1346 (T008); restilizado em T024 conforme ChatMockup → ListaConversas.
+ * Alturas: .item-conversa fica em 72 px (estimativa da ListaVirtual).
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- conversas */
+
+.conversas {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.painel-lista {
+  width: 400px;
+  min-width: 320px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid var(--linha);
+  background: var(--superficie);
+  padding: 0 14px 0;
+  min-height: 0;
+}
+
+.conversas .painel-lista {
+  width: 30%;
+  max-width: 460px;
+}
+
+.cabecalho-lista {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 40px;
+  -webkit-app-region: drag;
+}
+
+.cabecalho-lista > * {
+  -webkit-app-region: no-drag;
+}
+
+.acoes-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.busca-lista {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lista-virtual {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Listas de tela cheia sangram 14 px até a borda do painel (itens com divisória de ponta a ponta).
+ * Escopado (003 T052, pendência B6/B1): antes valia para toda .lista-virtual e vazava no Kanban. */
+.painel-lista > .lista-virtual,
+.tela-lista > .lista-virtual {
+  margin: 0 -14px;
+}
+
+/* Item de conversa: ativo --fundo-2 + barra âmbar 3 px; hora mono; divisória --linha. */
+.item-conversa {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 72px;
+  padding: 0 14px;
+  border: 0;
+  background: none;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s var(--ease-mesa);
+}
+
+.item-conversa:hover {
+  background: color-mix(in srgb, var(--fundo-2) 60%, transparent);
+}
+
+.item-conversa.ativa {
+  background: var(--fundo-2);
+}
+
+.item-conversa.ativa::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 var(--raio-pilula) var(--raio-pilula) 0;
+  background: var(--sinal);
+}
+
+.item-conversa-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  height: 100%;
+  border-bottom: 1px solid var(--linha);
+}
+
+.item-conversa-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.item-conversa-nome {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--texto);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-conversa.nao-lida .item-conversa-nome {
+  font-weight: 600;
+}
+
+.item-conversa-hora {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--texto-2);
+  flex: none;
+}
+
+.item-conversa.nao-lida .item-conversa-hora {
+  color: var(--sinal-texto);
+  font-weight: 600;
+}
+
+.item-conversa-resumo {
+  color: var(--texto-2);
+  font-size: 13px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-conversa-marcas {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.item-conversa-marcas .ponto-etiqueta {
+  width: 7px;
+  height: 7px;
+}
+
+.selo-nao-lidas {
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: var(--raio-pilula);
+  background: var(--sinal);
+  color: var(--tinta);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Seletor de conta (cabeçalho da lista). */
+.seletor-conta {
+  position: relative;
+  min-width: 0;
+}
+
+.seletor-conta-botao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 4px 4px;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: none;
+  color: var(--texto);
+  cursor: pointer;
+  max-width: 100%;
+  text-align: left;
+  transition: background 0.12s var(--ease-mesa);
+}
+
+.seletor-conta-botao:hover {
+  background: var(--fundo-2);
+}
+
+.seletor-conta-botao > svg {
+  flex: none;
+  color: var(--texto-2);
+}
+
+.seletor-conta-textos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.seletor-conta-textos strong {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.estado-conta {
+  font-size: 12px;
+  color: var(--texto-2);
+}
+
+.estado-conta.estado-conectada {
+  color: var(--ciano);
+}
+
+.estado-conta.estado-desconectada,
+.estado-conta.estado-banida {
+  color: var(--coral);
+}
+
+.seletor-conta-menu {
+  top: 48px;
+  left: 0;
+}
+
+/* busca de mensagens */
+.busca-mensagens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.dica-busca {
+  color: var(--texto-2);
+  font-size: 13px;
+  padding: 12px 4px;
+  margin: 0;
+}
+
+.resultados-busca {
+  list-style: none;
+  margin: 0 -14px;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.resultado-busca {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  background: none;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s var(--ease-mesa);
+}
+
+.resultado-busca:hover {
+  background: var(--fundo-2);
+}
+
+.resultado-busca strong {
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultado-busca small {
+  flex: none;
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  color: var(--texto-2);
+}
+
+.resultado-trecho {
+  color: var(--texto-2);
+  font-size: 13px;
+}
+
+.resultado-trecho mark {
+  color: var(--texto);
+  border-radius: 3px;
+  padding: 0 1px;
+}

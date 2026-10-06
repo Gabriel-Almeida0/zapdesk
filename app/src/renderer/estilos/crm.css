@@ -1,0 +1,427 @@
+/* crm.css — listas simples, contatos, templates, etiquetas, importação.
+ * Dono: B4 (leads, contatos, etiquetas, templates, importação).
+ * Origem (divisão mecânica T008, conteúdo sem alteração): app.css 2300–2481; app.css 2597–2688.
+ * Restilo B4 (T034): receitas da landing (linhas --linha, ativo = --fundo-2 + barra âmbar, telefones e
+ * variáveis em mono, ícones de relatório em ciano/coral/âmbar-texto). Medidas de caixa iguais às antigas.
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- listas simples */
+
+.lista-simples,
+.lista-cartoes,
+.lista-contas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-simples {
+  overflow-y: auto;
+  margin: 0 -14px;
+  flex: 1;
+}
+
+/* Contato / status: linha com divisória --linha, hover/ativo --fundo-2; ativo ganha a barra âmbar
+ * de 3 px dos itens de conversa (sombra interna: não mexe na caixa). */
+.item-contato,
+.item-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  background: none;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s var(--ease-mesa);
+}
+
+.item-contato:hover,
+.item-status:hover,
+.item-status.ativo {
+  background: var(--fundo-2);
+}
+
+.item-status.ativo {
+  box-shadow: inset 3px 0 0 var(--sinal);
+}
+
+.item-contato:disabled {
+  cursor: progress;
+}
+
+.item-contato-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.item-contato-textos strong {
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 21px;
+  color: var(--texto);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Telefone (contatos) / hora (status): mono como no mockup. */
+.item-contato-textos small {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--texto-2);
+}
+
+.anel-status {
+  padding: 2px;
+  border-radius: 50%;
+  border: 2.5px solid var(--sinal);
+  display: flex;
+}
+
+/* ---------------------------------------------------------------- templates */
+
+.item-template {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1px solid var(--linha);
+  background: none;
+  color: var(--texto);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s var(--ease-mesa);
+}
+
+.item-template:hover,
+.item-template.ativo {
+  background: var(--fundo-2);
+}
+
+.item-template.ativo {
+  box-shadow: inset 3px 0 0 var(--sinal);
+}
+
+/* "/atalho": comando digitado no chat → mono, âmbar de texto. */
+.item-template strong {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 21px;
+  color: var(--sinal-texto);
+}
+
+.item-template span {
+  color: var(--texto-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 13.5px;
+}
+
+.item-template small {
+  color: var(--texto-2);
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11.5px;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.editor-template textarea {
+  min-height: 180px;
+}
+
+/* Variáveis detectadas: pílulas mono (cores do .chip pronto). */
+.variaveis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.variaveis .chip {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12px;
+}
+
+.anexo-escolhido {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 12px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie-2);
+  color: var(--texto);
+}
+
+.anexo-escolhido > svg {
+  flex: none;
+  color: var(--texto-2);
+}
+
+.anexo-escolhido span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- etiquetas */
+
+.linha-etiqueta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  margin-bottom: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+.linha-etiqueta-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.linha-etiqueta-textos strong {
+  font-weight: 600;
+}
+
+/* Contagem de contatos: rótulo mono discreto. */
+.linha-etiqueta-textos small {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11.5px;
+  color: var(--texto-2);
+}
+
+.paleta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Amostra = cor de DADOS (inline). Contorno --linha-forte para não sumir no fundo; escolhida =
+ * folga na cor da superfície + anel --foco por fora (a caixa de 30 px não muda). */
+.amostra-cor {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--linha-forte);
+  cursor: pointer;
+  padding: 0;
+  transition: box-shadow 0.12s var(--ease-mesa);
+}
+
+.amostra-cor:hover {
+  box-shadow: inset 0 0 0 1px var(--linha-forte), 0 0 0 2px var(--linha);
+}
+
+.amostra-cor.escolhida {
+  border-color: var(--superficie);
+  box-shadow: 0 0 0 2px var(--foco);
+}
+
+/* Seletor de cor livre: quadradinho (≠ bolinhas das sugestões) com contorno de controle. */
+.cor-livre {
+  display: flex;
+}
+
+.cor-livre input {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cor-livre input::-webkit-color-swatch-wrapper {
+  padding: 3px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+}
+
+.cor-livre input::-webkit-color-swatch {
+  border: 0;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px var(--linha-forte);
+}
+
+.cor-livre input:hover::-webkit-color-swatch-wrapper {
+  background: var(--fundo-2);
+}
+
+.previa-etiqueta {
+  margin-bottom: 14px;
+  color: var(--texto-2);
+}
+
+/* ---------------------------------------------------------------- leads e importação */
+
+/* Selo "Sim/Não" do tamanho do texto (a célula da grade esticava a pílula). */
+.leads-grade > .selo {
+  justify-self: start;
+}
+
+/* Datas da grade de leads em mono (telefone já usa .mono). */
+.leads-grade:not(.cabecalho) > span:nth-child(4),
+.leads-grade:not(.cabecalho) > span:nth-child(5) {
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 12.5px;
+  color: var(--texto-2);
+}
+
+.area-arquivo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 28.5px;
+  border: 1.5px dashed var(--linha-forte);
+  border-radius: var(--raio-painel);
+  background: var(--superficie-2);
+  color: var(--texto);
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 14px;
+  transition:
+    background-color 0.12s var(--ease-mesa),
+    border-color 0.12s var(--ease-mesa);
+}
+
+.area-arquivo > svg {
+  color: var(--sinal-texto);
+}
+
+.area-arquivo > span {
+  font-weight: 600;
+}
+
+.area-arquivo:hover {
+  background: var(--fundo-2);
+  border-color: var(--texto-2);
+}
+
+.area-arquivo:focus-within {
+  outline: 2px solid var(--foco);
+  outline-offset: 3px;
+}
+
+.area-arquivo small {
+  color: var(--texto-2);
+}
+
+.area-arquivo input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.relatorio-importacao {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.relatorio-resumo {
+  margin: 0 0 6px;
+  color: var(--texto-2);
+}
+
+.relatorio-grupo {
+  border: 1px solid var(--linha);
+  border-radius: var(--raio-tecla);
+  background: var(--superficie);
+  color: var(--texto);
+  overflow: hidden;
+}
+
+.relatorio-grupo > summary,
+.relatorio-grupo.zerado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.relatorio-grupo > summary:hover,
+.relatorio-grupo[open] > summary {
+  background: var(--superficie-2);
+}
+
+.relatorio-grupo > summary:focus-visible {
+  outline-offset: -2px;
+}
+
+.relatorio-grupo.zerado {
+  cursor: default;
+  color: var(--texto-2);
+}
+
+.relatorio-grupo > summary small {
+  margin-left: auto;
+  font-family: var(--fonte-mono);
+  font-variant-ligatures: none;
+  font-size: 11px;
+  color: var(--texto-2);
+}
+
+.relatorio-grupo.ok .relatorio-icone {
+  color: var(--ciano);
+}
+
+.relatorio-grupo.info .relatorio-icone {
+  color: var(--sinal-texto);
+}
+
+.relatorio-grupo.erro .relatorio-icone {
+  color: var(--coral);
+}
+
+.relatorio-grupo.neutro .relatorio-icone,
+.relatorio-grupo.zerado .relatorio-icone {
+  color: var(--texto-2);
+}
+
+.relatorio-icone {
+  display: flex;
+}
+
+.relatorio-lista {
+  max-height: 260px;
+  overflow: auto;
+  border-top: 1px solid var(--linha);
+}

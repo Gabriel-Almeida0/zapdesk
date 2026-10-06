@@ -1,0 +1,393 @@
+/* funil.css — funis, Kanban.
+ * Dono: B6 (funis e Kanban).
+ * Origem: automacoes.css 130–410 (T008); restilizado em T042 conforme KanbanMockup da landing.
+ * Tokens: tema.css (contracts/tokens.md); receitas: contracts/vocabulario-visual.md. */
+
+/* ---------------------------------------------------------------- funis */
+
+.lista-funis,
+.lista-automacoes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cartao-funil {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--linha);
+  border-radius: 12px;
+  padding: 6px 8px 6px 0;
+  background: var(--superficie);
+  box-shadow: 0 1px 0 var(--linha);
+  transition: border-color 0.12s var(--ease-mesa), background 0.12s var(--ease-mesa);
+}
+
+.cartao-funil:hover {
+  border-color: var(--linha-forte);
+  background: var(--superficie-2);
+}
+
+.cartao-funil-link {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 18px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cartao-funil-link strong {
+  font-family: var(--fonte-titulo);
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.cartao-funil-link small {
+  color: var(--texto-2);
+}
+
+.cartao-funil-acoes {
+  display: flex;
+}
+
+.etapas-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Etapa no resumo: pílula neutra com a borda esquerda na cor da etapa (inline, dado do usuário). */
+.etapa-resumo {
+  font-size: 12.5px;
+  padding: 2px 8px;
+  border: 1px solid var(--linha);
+  border-left: 3px solid var(--linha-forte);
+  border-radius: 6px;
+  background: var(--fundo);
+  color: var(--texto-2);
+}
+
+.etapa-resumo b {
+  font-family: var(--fonte-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-ligatures: none;
+  color: var(--texto);
+}
+
+.lista-etapas-nova,
+.lista-etapas-edicao {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lista-etapas-nova li,
+.linha-etapa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lista-etapas-nova input,
+.linha-etapa input:not([type='color']) {
+  flex: 1;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+.linha-etapa small {
+  min-width: 24px;
+  text-align: right;
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-variant-ligatures: none;
+}
+
+.cor-etapa {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border: 1px solid var(--linha-forte);
+  border-radius: 8px;
+  background: var(--superficie);
+  cursor: pointer;
+}
+
+.cor-etapa::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.cor-etapa::-webkit-color-swatch {
+  border: 0;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px var(--linha-forte);
+}
+
+/* ---------------------------------------------------------------- kanban */
+
+.kanban-com-painel {
+  display: flex;
+  min-width: 0;
+}
+
+.tela.kanban {
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 0;
+}
+
+.busca-kanban {
+  max-width: 320px;
+}
+
+.quadro-kanban {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+}
+
+.coluna-kanban {
+  width: 280px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--superficie-2);
+  border: 1px solid var(--linha);
+  transition: border-color 0.12s var(--ease-mesa), background 0.12s var(--ease-mesa);
+}
+
+/* Alvo de soltura: tracejado âmbar sobre fundo âmbar suave. */
+.coluna-kanban.soltar {
+  border-style: dashed;
+  border-color: var(--sinal-texto);
+  background: var(--sinal-suave);
+}
+
+/* Borda superior de 4 px e ponto na cor da etapa (inline: dado do usuário). */
+.coluna-kanban-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 2px 4px 8px;
+  border-top: 4px solid;
+  border-radius: 6px 6px 0 0;
+}
+
+.coluna-kanban-cabecalho .ponto-etiqueta {
+  width: 8px;
+  height: 8px;
+}
+
+.coluna-kanban-cabecalho h2 {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--fonte);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contagem-coluna {
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-variant-ligatures: none;
+  color: var(--texto-2);
+}
+
+.coluna-kanban-lista {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.coluna-kanban-lista [role='listitem'] {
+  padding-bottom: 6px;
+}
+
+.coluna-kanban-vazia {
+  margin: 0;
+  padding: 24px 8px;
+  text-align: center;
+  color: var(--texto-2);
+  font-size: 13px;
+}
+
+/* Cartão: a lista virtual mede cada item (measureElement). As alturas de linha ficam em px para o
+ * cartão manter a altura de antes da identidade nova (80,77 px; 102,86 com etiquetas), seja qual
+ * for o corpo do texto: 1 + 9 + 20 (nome) + 4 + 16 (telefone) + 4 + 16,77 (tempo) + 9 + 1;
+ * etiquetas: + 4 + 18,09 (pílula 14,09 + 2 × 1 + 2 × 1). Mudou algo aqui? Confira com --medir. */
+.cartao-kanban {
+  position: relative;
+  display: flex;
+  line-height: 16px;
+  border: 1px solid var(--linha);
+  border-radius: 8px;
+  background: var(--superficie);
+  box-shadow: 0 1px 0 var(--linha);
+  cursor: grab;
+  transition: border-color 0.12s var(--ease-mesa), box-shadow 0.12s var(--ease-mesa);
+}
+
+.cartao-kanban:hover {
+  border-color: var(--linha-forte);
+}
+
+.cartao-kanban:active {
+  cursor: grabbing;
+}
+
+/* Origem do arraste (o cartão que fica na coluna enquanto o fantasma anda). */
+.cartao-kanban.arrastando {
+  border-color: var(--linha-forte);
+  box-shadow: var(--sombra-painel);
+}
+
+.cartao-kanban-corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 9px 4px 9px 11px;
+  border: 0;
+  border-radius: 7px 0 0 7px;
+  background: transparent;
+  color: var(--texto);
+  font: inherit;
+  line-height: 16px;
+  text-align: left;
+  cursor: inherit;
+}
+
+.cartao-kanban-corpo strong {
+  max-width: 100%;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Telefone (o primeiro small) em mono. */
+.cartao-kanban-corpo small {
+  max-width: 100%;
+  color: var(--texto-2);
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-variant-ligatures: none;
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cartao-kanban-corpo .lista-chips {
+  line-height: 14.09375px;
+}
+
+.cartao-kanban-corpo small.cartao-kanban-tempo {
+  font-family: var(--fonte);
+  font-size: 11px;
+  line-height: 16.765625px;
+}
+
+.cartao-kanban-acoes {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 2px;
+  color: var(--texto-2);
+  opacity: 0.4;
+  transition: opacity 0.12s var(--ease-mesa);
+}
+
+.cartao-kanban:hover .cartao-kanban-acoes,
+.cartao-kanban:focus-within .cartao-kanban-acoes {
+  opacity: 1;
+}
+
+.menu-mover {
+  position: fixed;
+  z-index: 50;
+  width: 200px;
+}
+
+/* ---------------------------------------------------------------- painel do cartão */
+
+.painel-cartao .painel-contato-topo strong {
+  font-family: var(--fonte-titulo);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.painel-cartao .painel-contato-topo small {
+  color: var(--texto-2);
+  font-family: var(--fonte-mono);
+  font-size: 12px;
+  font-variant-ligatures: none;
+}
+
+.historico-funil {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.historico-funil li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 2px solid var(--linha-forte);
+  padding-left: 10px;
+}
+
+.historico-funil strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.historico-funil small {
+  color: var(--texto-2);
+  font-family: var(--fonte-mono);
+  font-size: 11px;
+  font-variant-ligatures: none;
+}
+
+.linha-campo-lead input {
+  flex: 1;
+  min-width: 0;
+}
